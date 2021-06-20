@@ -4,13 +4,13 @@
 <div id="list-page">
     {{ $pages := .Site.RegularPages }}
     {{ $paginator := .Paginate ($pages) }}
-    {{ range $paginator.Pages }}
+    {{ range where $paginator.Pages "Params.hidden" "ne" "true" }}
         {{ $title := .Title }}
         {{ $summary := .Summary }}
         {{ $date := dateFormat "Jan 2, 2006" .Date }}
         <section class="item">
           <div>
-            <h1 class="title"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h1>   
+            <h1 class="title"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h1>
             <div class="date">{{ $date }}</div>
           </div>
 
@@ -28,7 +28,7 @@
                   </a>
             </span>
           {{ end }}
-          
+
           {{ if $paginator.HasNext }}
               <span class="next">
                   <a href="{{.Paginator.Next.URL}}">
